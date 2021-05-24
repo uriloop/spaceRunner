@@ -11,7 +11,7 @@ public class Bala {
 
     Animacion animacion;
     float x,y,vel,h,w;
-
+    Sound dispar;
 
     public Bala(float x, float y) {
         this.x=x;
@@ -24,7 +24,8 @@ public class Bala {
         texturas[2]= new Texture("dispars/bala3.png");
         texturas[3]= new Texture("dispars/bala4.png");
         animacion= new Animacion(50,texturas);
-
+        dispar= Gdx.audio.newSound(Gdx.files.internal("dispars/blaster.ogg"));
+        dispar.play(0.8f);
     }
 
     public void update(float velocitat) {

@@ -16,17 +16,19 @@ public class Multiusos {
     }
 
     float random(float primer,float ultim){   // Retorna un float entre dos floats a l'atzar.
-        float interval= ultim-primer;
-        float resultat= interval*(float)Math.random();
+        int interval= (int)(ultim-primer);
+        int resultat= (int)(interval*(float)Math.random());
         return resultat;
     }
 
     Music random(Music... musica){
-
-int pos= (int)(random(0,musica.length*10));
-    if (pos>8)pos=1;
-    else pos/=10;
-       return musica[pos];
+        List<Music> musiques = new ArrayList<>();
+        for (Music mus : musica){
+            musiques.add(mus);
+        }
+        int result= (int)random(0,musiques.size()*100);
+        result/=100;
+       return musica[result];
     }
 
     static Random random = new Random();

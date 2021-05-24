@@ -92,6 +92,7 @@ public class ScoreBoard {
         }
     }
 
+    boolean si=false;
     void render(SpriteBatch batch, BitmapFont font) {
 
         batch.draw(Assets.taula,175,350);
@@ -112,55 +113,74 @@ public class ScoreBoard {
             font.getData().setScale(2);
         }else {
 
-            //ordenar();
 
-            scoreList.sort(new Comparator<Score>() {
+
+            /*scoreList.sort(new Comparator<Score>() {
                 @Override
                 public int compare(Score o1, Score o2) {
 
                     return o2.puntuacion - o1.puntuacion;
                 }
             });
+            */
 
 
 
+            if (!si){
+                ordenar1();
+                si=true;
+            }
 
 
 
 
             font.draw(batch, "* Hall of Fame *", 300, 720);
 
-            for (int i = 0; i < 5 && i < scoreList.size(); i++) {
-                font.draw(batch, scoreList.get(i).nombre, 320, 660-i*30);
-                font.draw(batch, ""+scoreList.get(i).puntuacion, 400, 660-i*30);
+            for (int i = 0; i < 5 && i < aMostrar.size(); i++) {
+                font.draw(batch, aMostrar.get(i).nombre, 320, 660-i*30);
+                font.draw(batch, ""+aMostrar.get(i).puntuacion, 400, 660-i*30);
             }
 
         }
 
     }
 
-    private void ordenar() {
+    List<Score> aMostrar=new ArrayList<>();
+
+    private void ordenar1() {
 
         List<Score> guardada= scoreList;
-        List<Score> aMostrar=new ArrayList<>();
+        aMostrar.clear();
         Score provisional= guardada.get(0);
-
-        for (int i = 0; i < guardada.size() || i < 5; i++) {
-            for (Score score:guardada){
-                if (provisional.puntuacion<scoreList.get(i).puntuacion){
+        for (int i = 0; i < scoreList.size() || i < 5; i++) {   // guardem tants
+            if (!guardada.isEmpty())provisional=guardada.get(0);
+            else break;
+            for (Score score:guardada){                     // mirem tots els casos i ens guardem el mes alt i borrem el mes alt
+                if (provisional.puntuacion<=score.puntuacion){
                     provisional=score;
                 }
-            }
+           }
             aMostrar.add(provisional);
-            scoreList.remove(provisional);
-            guardada=scoreList;
-
-
+            guardada.remove(provisional);
         }
+    }
 
-
-
-
+    void ordenar2(){
+        aMostrar.clear();
+        aMostrar=scoreList;
+        boolean hacanviat=true;
+        Score provisional;
+        while (hacanviat){
+            hacanviat=false;
+            for (int i = 0; i < scoreList.size()-1; i++) {
+                if (aMostrar.get(i).puntuacion < aMostrar.get(i+1).puntuacion){
+                    provisional= aMostrar.get(i+1);
+                    aMostrar.set(i+1,aMostrar.get(i));
+                    aMostrar.set(i,provisional);
+                    hacanviat=true;
+                }
+            }
+        }
     }
 
 
@@ -179,7 +199,7 @@ public class ScoreBoard {
             }
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             /*if(index == 3) {
                 return 1;
             }*/
@@ -191,11 +211,13 @@ public class ScoreBoard {
         if(index > 2 && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) ) {
             saved = false;
             index = 0;
+            si=false;
             return 1;
         }
         if(index > 2 && Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             saved = false;
             index = 0;
+            si=false;
             return 2;
         }
 

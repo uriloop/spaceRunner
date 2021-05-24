@@ -11,10 +11,11 @@ public class Player {
     float x,y,margeLateral,ample,w,h;
     Texture[] mort2,accelera,frena,normal,costat1Frena,costat1Accelera,costat1Normal,costat2Frena,costat2Accelera,costat2Normal;
     Animacion acceleraA,mort,frenaA,normalA,costat1FrenaA,costat1AcceleraA,costat1NormalA,costat2FrenaA,costat2AcceleraA,costat2NormalA;
-    int vidas=3;
+    static int vidas=3;
     boolean muerto=false;
     Animacion actual;
     Sound alarm;
+    boolean playso= false;
 
 
     Temporizador respawn=new Temporizador(100,true);
@@ -89,6 +90,7 @@ public class Player {
         actual=mort;
         if (respawn.suena()) {
             muerto = false;
+            playso=false;
         }
 
 
@@ -151,10 +153,15 @@ public class Player {
         y=80;
         vidas=3;
 
+
     }
 
     public void morir(){
+        if (!playso){
             alarm.play();
+            playso=true;
+        }
+
             vidas--;
             muerto=true;
             respawn.activar();

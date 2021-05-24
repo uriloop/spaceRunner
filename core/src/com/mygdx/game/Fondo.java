@@ -24,11 +24,11 @@ public class Fondo {
 
 
         capa3.update(velocitat/150f);
-        capa4.update(velocitat/50f);
-        capa2.update(velocitat/100f);
+        capa4.update(velocitat/30f);
+        capa2.update(velocitat/80f);
         capa1.update(velocitat/200f);
-        capa22.update(velocitat/100f);
-        capa44.update(velocitat/50f);
+        capa22.update(velocitat/80f);
+        capa44.update(velocitat/30f);
 
 
     }

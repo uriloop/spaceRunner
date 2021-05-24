@@ -60,6 +60,7 @@ public class Obstacle {
                 w=75;
                 vidas=1;
                 punts=1000;
+                moviment=1;
                 canviDireccio=new Temporizador(1,false);
                 break;
             case "alien":
@@ -70,15 +71,17 @@ public class Obstacle {
                 vidas=2;
                 punts+=3000;
                 canviDireccio=new Temporizador(15,true);
+                moviment=3;
                 break;
             case "ship":
                 anim= new Animacion(20,ship);
                 altura=100;
                 h=50;
-                w=120;
+                w=126;
                 punts+=6000;
                 vidas=3;
                 canviDireccio=new Temporizador(20,true);
+                moviment=6;
                 break;
             default:
                 anim=new Animacion(20,alien);
@@ -93,7 +96,13 @@ public class Obstacle {
     }
 
     void update (float vel){
-        y-=vel/50;
+        if (tipus.equals("roca")){
+            y-=vel/18;
+        }else{
+            y-=vel/50;
+        }
+
+
 
         x+=movimentAleatori();
 
@@ -103,22 +112,9 @@ public class Obstacle {
     private float movimentAleatori() {
 
         if (canviDireccio.suena()){
-            switch (tipus){
-                case "alien":
-                    moviment=fer.random(-5,2);
-
-                    break;
-                case "roca":
-                    moviment=fer.random(-1f,1f);
-                    break;
-                case "ship":
-                    moviment=fer.random(-6,6);
-                    break;
-                default:
-                    break;
-            }
-
+           moviment*=-1;
         }
+
 
         if (x>780-w||x<10)moviment*=(-1);
 

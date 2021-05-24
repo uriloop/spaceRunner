@@ -16,4 +16,5 @@ public class Animacion {
         int anim = Temporizador.framesJuego/duracion%textures.length;
         return textures[anim];
     }
+
 }
