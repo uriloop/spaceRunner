@@ -31,7 +31,11 @@ public class Bala {
     public void update(float velocitat) {
 
         vel=100;
+
         vel-=velocitat/6;
+        if (vel<30){
+            vel=30;
+        }
         y+=vel;
     }
 

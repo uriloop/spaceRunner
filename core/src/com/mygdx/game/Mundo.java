@@ -177,15 +177,22 @@ public class Mundo {
     private void generarObtacles() {
         // Obstacles/enemics
         if (generaObstacle.suena()){
+            if (distancia%100000==0){
+                if (generaObstacle.frecuencia>50)generaObstacle.frecuencia-=5;
+            }
+            if (generaObstacle.frecuencia>50)generaObstacle.frecuencia-=5;
             obstacles.add(new Obstacle(fer.random("alien","roca","ship")));   ///  Aquest random mola!
             // obstacles.add(new Obstacle("alien"));
             generaObstacle.activar();
         }
-        if (distancia%10000==0&&distanciaEntreObstacles>300){
-            distanciaEntreObstacles-=20;
-        }
-        if (puntos%5000==0&& puntos>5000){
-            generaObstacle.frecuencia--;
+
+        if(distancia%100000==0){
+            if (distanciaEntreObstacles>300){
+                distanciaEntreObstacles-=20;
+            }
+            obstacles.add(new Obstacle(fer.random("ship")));
+
+
         }
 
         if (distancia%distanciaEntreObstacles==0){
@@ -261,7 +268,7 @@ public class Mundo {
         }
         for (Obstacle obstacle: obstacles){
             if (fer.solapen(obstacle.x, obstacle.y, obstacle.w, obstacle.h, player.x, player.y, player.w, player.h)){
-                if(tempMort.suena()){
+                if(tempMort.suena()&&!gameOver){
                     player.morir();
                     obstacle.vidas-=3;
                     tempMort.activar();
@@ -294,8 +301,9 @@ public class Mundo {
                 quefa=1;
             }
         }
-        if (Temporizador.framesJuego%500==0&& velMin<600){
-            velMin+=15;
+        if (Temporizador.framesJuego%200==0&& velMin<600){
+
+            velMin+=4;
             velMax+=2;
         }
     }
